@@ -211,7 +211,7 @@ export const PipelineProcessorsEditorItem: FunctionComponent<Props> = memo(
               <EuiFlexItem
                 data-test-subj="pipelineProcessorItemDescriptionContainer"
                 className={inlineTextInputContainerClasses}
-                grow={false}
+                //grow={false}
               >
                 <InlineTextInput
                   disabled={isEditorNotInIdleMode}

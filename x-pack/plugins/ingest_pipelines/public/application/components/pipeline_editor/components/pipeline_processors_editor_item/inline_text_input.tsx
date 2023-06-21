@@ -7,7 +7,7 @@
 
 import classNames from 'classnames';
 import React, { useState, useEffect, useCallback, memo } from 'react';
-import { EuiFieldText, EuiText, keys, EuiToolTip } from '@elastic/eui';
+import { EuiFieldText, EuiText, keys, EuiToolTip, EuiInlineEditText } from '@elastic/eui';
 
 export interface Props {
   placeholder: string;
@@ -39,6 +39,7 @@ function _InlineTextInput({
     'pipelineProcessorsEditor__item__textContainer--notEditing': !isShowingTextInput && !disabled,
   });
 
+  const test = placeholder;
   const submitChange = useCallback(() => {
     // Give any on blur handlers the chance to complete if the user is
     // tabbing over this component.
@@ -69,37 +70,49 @@ function _InlineTextInput({
     };
   }, [isShowingTextInput, submitChange, setIsShowingTextInput]);
 
-  return isShowingTextInput && !disabled ? (
-    <div className={`pipelineProcessorsEditor__item__textContainer ${containerClasses}`}>
-      <EuiFieldText
-        controlOnly
-        onBlur={submitChange}
-        fullWidth
-        compressed
-        value={textValue}
-        aria-label={ariaLabel}
-        className="pipelineProcessorsEditor__item__textInput"
-        inputRef={(el) => el?.focus()}
-        onChange={(event) => setTextValue(event.target.value)}
-      />
-    </div>
-  ) : (
-    <div
-      className={containerClasses}
-      tabIndex={disabled ? -1 : 0}
-      onFocus={() => setIsShowingTextInput(true)}
-    >
-      <EuiToolTip content={text ?? placeholder}>
-        <EuiText size="s" color="subdued">
-          <div
-            className="pipelineProcessorsEditor__item__description"
-            data-test-subj="inlineTextInputNonEditableText"
-          >
-            {text || <em>{placeholder}</em>}
-          </div>
-        </EuiText>
-      </EuiToolTip>
-    </div>
+  // return isShowingTextInput && !disabled ? (
+  //   <div className={`pipelineProcessorsEditor__item__textContainer ${containerClasses}`}>
+  //     <EuiFieldText
+  //       controlOnly
+  //       onBlur={submitChange}
+  //       fullWidth
+  //       compressed
+  //       value={textValue}
+  //       aria-label={ariaLabel}
+  //       className="pipelineProcessorsEditor__item__textInput"
+  //       inputRef={(el) => el?.focus()}
+  //       onChange={(event) => setTextValue(event.target.value)}
+  //     />
+  //   </div>
+  // ) : (
+  //   <div
+  //     className={containerClasses}
+  //     tabIndex={disabled ? -1 : 0}
+  //     onFocus={() => setIsShowingTextInput(true)}
+  //   >
+  //     <EuiToolTip content={text ?? placeholder}>
+  //       <EuiText size="s" color="subdued">
+  //         <div
+  //           className="pipelineProcessorsEditor__item__description"
+  //           data-test-subj="inlineTextInputNonEditableText"
+  //         >
+  //           {text || <em>{placeholder}</em>}
+  //         </div>
+  //       </EuiText>
+  //     </EuiToolTip>
+  //   </div>
+  // );
+
+  return (
+    <EuiInlineEditText
+      defaultValue={text || ''}
+      inputAriaLabel="Test Label"
+      editModeProps={{
+        inputProps: {
+          placeholder: test,
+        },
+      }}
+    />
   );
 }
 
